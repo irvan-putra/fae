@@ -1,4 +1,4 @@
-package com.yourname.helloworld
+package com.vanipy.fae
 
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -30,7 +30,7 @@ class LogHistoryActivity : AppCompatActivity() {
         findViewById<Button>(R.id.copyAllButton).setOnClickListener {
             val text = logText.text?.toString().orEmpty()
             val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            clipboard.setPrimaryClip(ClipData.newPlainText("Irvan Trae logs", text))
+            clipboard.setPrimaryClip(ClipData.newPlainText("Fae logs", text))
         }
 
         findViewById<Button>(R.id.clearButton).setOnClickListener {

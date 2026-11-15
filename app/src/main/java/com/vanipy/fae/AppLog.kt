@@ -1,4 +1,4 @@
-package com.yourname.helloworld
+package com.vanipy.fae
 
 import android.content.Context
 import android.util.Log

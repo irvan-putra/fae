@@ -1,8 +1,8 @@
-# Irvan Trae (Android)
+# Fae (Android)
 
 An Android (Kotlin) app that lets you push a ZIP file to a GitHub repo using real `git` over **SSH**.
 
-![Irvan Trae screenshot](docs/screenshot.jpg)
+![Fae screenshot](docs/screenshot.jpg)
 
 ## Capabilities
 

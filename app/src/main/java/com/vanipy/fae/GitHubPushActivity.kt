@@ -1,4 +1,4 @@
-package com.yourname.helloworld
+package com.vanipy.fae
 
 import android.net.Uri
 import android.os.Bundle
@@ -171,7 +171,7 @@ class GitHubPushActivity : AppCompatActivity() {
         findViewById<Button>(R.id.copyLogButton).setOnClickListener {
             val text = if (lastErrorForCopy.isNotBlank()) lastErrorForCopy else AppLog.readAll(this)
             val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            clipboard.setPrimaryClip(ClipData.newPlainText("Irvan Trae log", text))
+            clipboard.setPrimaryClip(ClipData.newPlainText("Fae log", text))
             status.text = "Log copied."
         }
 

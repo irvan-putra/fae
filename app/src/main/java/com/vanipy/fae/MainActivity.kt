@@ -1,4 +1,4 @@
-package com.yourname.helloworld
+package com.vanipy.fae
 
 import android.os.Bundle
 import android.animation.ObjectAnimator
