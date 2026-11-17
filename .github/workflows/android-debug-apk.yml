@@ -37,7 +37,7 @@ jobs:
           set -euo pipefail
           APK=$(find app/build/outputs/apk/debug -name '*.apk' -type f | head -1)
           AAPT=$(find "$ANDROID_HOME/build-tools" -mindepth 2 -maxdepth 2 -type f -name aapt | sort -V | tail -1)
-          "$AAPT" dump badging "$APK" | grep -F "package: name='com.vanipy.fae' versionCode='3' versionName='1.1.1'"
+          "$AAPT" dump badging "$APK" | grep -F "package: name='com.vanipy.fae' versionCode='4' versionName='1.1.2'"
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
