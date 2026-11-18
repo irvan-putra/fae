@@ -1,8 +1,8 @@
-# Fae (Android)
+# Unggah (Android)
 
 An Android (Kotlin) app that lets you push a ZIP file to a GitHub repo using real `git` over **SSH**.
 
-![Fae screenshot](docs/screenshot.jpg)
+![Unggah screenshot](docs/screenshot.jpg)
 
 ## Capabilities
 

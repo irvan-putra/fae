@@ -1,13 +1,13 @@
 name: sign test apk
-# Manual only. Tests, builds the debug variant and re-signs it with the dedicated fae key. Uploads a workflow artifact only.
+# Manual only. Tests, builds the debug variant and re-signs it with the dedicated unggah key. Uploads a workflow artifact only.
 # This repo has no unit tests; the gate job requires its CI run (build + identity check) to have passed on the same commit.
-# DRAFT, NOT ACTIVE until the fae signing key exists, its four secrets are set, and the three values marked SET below are filled in.
+# DRAFT, NOT ACTIVE until the unggah signing key exists, its four secrets are set, and the three values marked SET below are filled in.
 # It never creates a release, tag or commit. A reviewed person attaches the APK to a release by hand.
 on:
   workflow_dispatch:
     inputs:
       confirm_sign:
-        description: Type SIGN to build and sign a test APK with the fae key
+        description: Type SIGN to build and sign a test APK with the unggah key
         required: true
         type: string
 permissions:
@@ -42,8 +42,8 @@ jobs:
       # SET per release: must equal app/build.gradle and the icon badge. Edit in the release commit.
       EXPECTED_VERSION_NAME: '1.1.2'
       EXPECTED_VERSION_CODE: '4'
-      EXPECTED_PACKAGE: com.vanipy.fae
-      EXPECTED_LABEL: fae
+      EXPECTED_PACKAGE: com.vanipy.unggah
+      EXPECTED_LABEL: unggah
       BUILD_TOOLS_VERSION: 34.0.0
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
@@ -74,7 +74,7 @@ jobs:
           work=$(mktemp -d "$RUNNER_TEMP/sign.XXXXXX"); chmod 700 "$work"
           trap 'rm -rf "$work"' EXIT
           printf '%s' "$KS_B64" | base64 -d > "$work/app.jks"; chmod 600 "$work/app.jks"
-          out="fae-v${EXPECTED_VERSION_NAME}.apk"
+          out="unggah-v${EXPECTED_VERSION_NAME}.apk"
           "$bt/zipalign" -f -p 4 "$src" "$work/aligned.apk"
           printf '%s\n%s\n' "$KS_STORE_PW" "$KS_KEY_PW" > "$work/pw"
           "$bt/apksigner" sign --ks "$work/app.jks" --ks-key-alias "$KS_ALIAS" \
@@ -89,10 +89,10 @@ jobs:
       - name: Upload signed test APK artifact
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
-          name: fae-signed-test
+          name: unggah-signed-test
           path: |
-            fae-v*.apk
-            fae-v*.apk.sha256
+            unggah-v*.apk
+            unggah-v*.apk.sha256
             verify.txt
             badging.txt
           if-no-files-found: error

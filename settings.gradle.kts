@@ -14,5 +14,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "IrvanTrae"
+rootProject.name = "unggah"
 include(":app")

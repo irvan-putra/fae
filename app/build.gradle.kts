@@ -22,11 +22,11 @@ fun escapeForBuildConfig(value: String): String =
     value.replace("\\", "\\\\").replace("\"", "\\\"").replace("\n", " ").trim()
 
 android {
-    namespace = "com.vanipy.fae"
+    namespace = "com.vanipy.unggah"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.vanipy.fae"
+        applicationId = "com.vanipy.unggah"
         minSdk = 24
         targetSdk = 34
         versionCode = 4

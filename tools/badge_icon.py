@@ -103,13 +103,34 @@ def write_densities(img, res_dir, name="ic_launcher.png"):
         os.makedirs(out, exist_ok=True)
         img.resize((px, px), Image.LANCZOS).save(os.path.join(out, name), optimize=True)
 
+def unggah(version):
+    """A rocket launching out of an open parcel: the app pushes ZIP contents up to GitHub.
 
-def fae(version, base_path):
-    photo = Image.open(base_path).convert("RGBA").resize((S, S), Image.LANCZOS)
-    f = Image.new("RGBA", (S, S), (0, 0, 0, 0))
-    f.alpha_composite(photo)
-    # the photo is the whole icon; only the version text is checked against the round mask
-    return compose(None, f, version, (8, 20, 24, 235), (245, 250, 250, 255), rounded=.2, circle_check=False)
+    The rocket is the app's own in-app sprite (res/drawable/rocket_down.png),
+    flipped to point up. Everything else is drawn here deterministically.
+    """
+    S_local = S
+    bg = (11, 21, 38, 255)
+    art, d = new_layer(S_local)
+
+    # open parcel below the rocket
+    bw = 0.34 * S_local; bh = 0.16 * S_local
+    bx0 = (S_local - bw) / 2; by0 = S_local * 0.58
+    box_fill = (150, 105, 60, 255); box_dark = (110, 75, 42, 255)
+    d.polygon([(bx0, by0), (bx0 - 0.09 * S_local, by0 - 0.05 * S_local), (bx0 + bw * 0.28, by0 - 0.03 * S_local)], fill=box_dark)
+    d.polygon([(bx0 + bw, by0), (bx0 + bw + 0.09 * S_local, by0 - 0.05 * S_local), (bx0 + bw * 0.72, by0 - 0.03 * S_local)], fill=box_dark)
+    d.rectangle([bx0, by0, bx0 + bw, by0 + bh], fill=box_fill)
+    d.polygon([(bx0, by0), (bx0 + bw / 2, by0 + 0.05 * S_local), (bx0 + bw, by0)], fill=box_dark)
+
+    # rocket sprite, flipped to ascend
+    import os as _os
+    rk_path = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), "..", "app", "src", "main", "res", "drawable", "rocket_down.png")
+    rk = Image.open(rk_path).convert("RGBA").transpose(Image.ROTATE_180)
+    rw = int(0.30 * S_local); rh = int(rw * rk.size[1] / rk.size[0])
+    rk = rk.resize((rw, rh), Image.LANCZOS)
+    art.alpha_composite(rk, (int((S_local - rw) / 2), int(S_local * 0.20)))
+
+    return compose(bg, art, version, (8, 20, 24, 235), (245, 250, 250, 255), rounded=.2)
 
 
 def main():
@@ -117,8 +138,8 @@ def main():
     root = os.path.abspath(os.path.join(here, ".."))
     gradle = open(os.path.join(root, "app/build.gradle.kts")).read()
     version = parse_version(sys.argv, re.search(r'versionName = "([^"]+)"', gradle).group(1))
-    img = fae(version, os.path.join(here, "assets", "fae-icon-base.png"))
-    out = os.path.join(root, "app/src/main/res/drawable/ic_irvan.png")
+    img = unggah(version)
+    out = os.path.join(root, "app/src/main/res/drawable/ic_launcher.png")
     img.resize((512, 512), Image.LANCZOS).save(out, optimize=True)
     print("wrote icon for", version)
 
