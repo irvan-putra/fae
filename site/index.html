@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Unggah web: update a GitHub repo from a ZIP</title>
+<style>
+:root{color-scheme:light dark;--bg:#f4f5f8;--fg:#16181d;--card:#fff;--ac:#4b4fd6;--mut:#5b6170;--bd:#d6d9e2;--ok:#1b7a3d;--bad:#b3261e}
+@media(prefers-color-scheme:dark){:root{--bg:#121318;--fg:#e6e8ee;--card:#1b1d25;--ac:#9fa3ff;--mut:#9aa0b0;--bd:#2c2f3b;--ok:#6fd08c;--bad:#ff8a80}}
+*{box-sizing:border-box}body{margin:0;font:16px/1.5 system-ui,sans-serif;background:var(--bg);color:var(--fg)}main{max-width:760px;margin:0 auto;padding:16px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px;margin:12px 0}
+input[type=text]{font:inherit;width:100%;padding:8px;border-radius:8px;border:1px solid var(--bd);background:var(--bg);color:var(--fg);margin:4px 0}
+button,label.btn{display:inline-block;background:var(--ac);color:#fff;border:0;border-radius:8px;padding:9px 13px;font:inherit;cursor:pointer;margin:4px 6px 0 0}@media(prefers-color-scheme:dark){button,label.btn{color:#101226}}
+button:disabled{opacity:.45;cursor:not-allowed}button.alt{background:var(--mut)}input[type=file]{display:none}.mut{color:var(--mut);font-size:.9em}a{color:var(--ac)}
+ul{padding-left:0;list-style:none;font:13px/1.6 ui-monospace,monospace;max-height:40vh;overflow:auto;word-break:break-all}.a{color:var(--ok)}.m{color:var(--ac)}.r{color:var(--bad)}#msg{font-weight:600}
+</style></head><body><main>
+<h1>Unggah web</h1>
+<p>Pick a ZIP, choose a repo and branch, see exactly what would change, then commit it as one commit. This is the browser version of the Unggah Android app, which pushes a ZIP over SSH.</p>
+<p class="mut" id="state"></p>
+<div class="card"><label>Repository (owner/name)<input type="text" id="repo" placeholder="owner/name" autocomplete="off"></label>
+<label>Branch<input type="text" id="br" value="main" autocomplete="off"></label>
+<label class="btn">Choose ZIP<input type="file" id="zip" accept=".zip,application/zip"></label><span id="zn" class="mut"></span>
+<p><label><input type="checkbox" id="del"> Remove repo files that are not in the ZIP</label></p>
+<button id="cmp" disabled>Compare with branch</button></div>
+<div class="card" id="res" hidden><div id="sum"></div><ul id="list"></ul>
+<label>Commit message<input type="text" id="msg" value="Update from Unggah web" autocomplete="off"></label>
+<button id="commit" disabled>Commit</button> <span id="cst" class="mut"></span></div>
+<p class="mut">Your ZIP is read in this browser; files go only to api.github.com when you commit. The page never asks for a password or a token. Sign-in uses GitHub's own device-code page. <a href="https://github.com/irvan-putra/unggah">Source</a> · <a href="https://github.com/irvan-putra/unggah/releases">Android app</a></p>
+<script src="config.js"></script><script src="zip.js"></script><script src="git.js"></script><script src="app.js"></script></main></body></html>
