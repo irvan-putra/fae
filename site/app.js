@@ -24,12 +24,13 @@ $("cmp").onclick = async () => {
     $("sum").textContent = `${pl.add.length} added, ${pl.modify.length} changed, ${pl.remove.length} removed, ${pl.same.length} unchanged`;
     const ul = $("list"); ul.replaceChildren();
     pl.add.forEach(f => ul.append(line("a", "+", f.path))); pl.modify.forEach(f => ul.append(line("m", "~", f.path))); pl.remove.forEach(f => ul.append(line("r", "-", f.path)));
-    $("res").hidden = false; $("commit").disabled = !(pl.add.length + pl.modify.length + pl.remove.length) || !(loop || cfg.REAL_WRITES);
+    $("rmc").hidden = !pl.remove.length; $("rmok").checked = false; $("res").hidden = false; $("commit").disabled = !(pl.add.length + pl.modify.length + pl.remove.length) || !(loop || cfg.REAL_WRITES);
     if (!$("commit").disabled || (loop || cfg.REAL_WRITES)) $("cst").textContent = ""; else $("cst").textContent = "Committing is switched off in this build.";
   } catch (err) { $("res").hidden = false; $("sum").textContent = "Could not compare: " + err.message; $("list").replaceChildren(); $("commit").disabled = true; }
   upd();
 };
 $("commit").onclick = async () => {
+  if (pl.remove.length && !$("rmok").checked) { $("cst").textContent = "Tick the removal confirmation first, or untick the removal option and compare again."; return; }
   $("commit").disabled = true;
   try {
     const [owner, repo] = $("repo").value.trim().split("/"), branch = $("br").value.trim() || "main";
